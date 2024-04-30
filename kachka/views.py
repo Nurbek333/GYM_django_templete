@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from .models import Trainer,Contact
 from .forms import ContactForm
-
+from .bot import send_message
 
 
 
@@ -30,6 +30,9 @@ def contact_view(request):
         email = form.cleaned_data["email"]
         phone_number = form.cleaned_data["phone_number"]
         description = form.cleaned_data["description"]
+
+        send_message(name,email,phone_number,description)
+        
         form.save()
         form = ContactForm()
         

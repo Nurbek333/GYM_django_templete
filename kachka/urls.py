@@ -7,7 +7,7 @@ urlpatterns = [
     path('',home_view, name="home-page"),
     path('trainer/',trainer_view,  name="trainer-page"),
     path('why/',why_view, name="why-page"),
-    path('contact/', contact_view, name="cantact-page"),
+    path('contact/',contact_view, name="cantact-page"),
      path('base/', base_view, name="base-page"),
     
     

@@ -19,8 +19,10 @@
                 Contact Us
               </h2>
             </div>
-            <form action="">
-              <div>
+            <form action="{% url 'cantact-page' %}" method="POST">
+              {% csrf_token %}
+              {{form.as_p}}
+              <!-- <div>
                 <input type="text" placeholder="Name" />
               </div>
               <div>
@@ -31,9 +33,9 @@
               </div>
               <div>
                 <input type="text" class="message-box" placeholder="Message" />
-              </div>
+              </div> -->
               <div class="d-flex ">
-                <button>
+                <button type="submit">
                   Send
                 </button>
               </div>

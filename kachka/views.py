@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
-from .models import Trainer,Contact
+from .models import Trainer,Contact,Article
 from .forms import ContactForm
 from .bot import send_message
-
+from django.contrib import messages  # new
+from django.urls import reverse  # new
+from .forms import ArticleForm, CommentForm
 
 
 def home_view(request):
@@ -40,6 +42,32 @@ def contact_view(request):
 
 
     return render(request, "contact.html",context)
+
+
+def create_article(request):
+
+    if request.method == "POST":
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            image = form.cleaned_data['image']
+
+            article = Article(
+                title=title,
+                description=description,
+                image=image,
+            )
+            article.save()
+            messages.success(request, '🥳 Maqolangiz adminga yuborildi, tekshiruvdan so\'ng chop etiladi')
+            return HttpResponseRedirect(reverse('articles-list'))
+        else:
+            messages.error(request, 'Formani qaytadan to\'ldiring')
+    else:
+        form = ArticleForm()
+    context = {"form": form}
+    
+    return render(request, "contact.html", context)
 
 #--------------------------------------------------------------------------------------------------------------------
 
